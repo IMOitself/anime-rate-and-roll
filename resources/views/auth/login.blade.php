@@ -47,11 +47,5 @@
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
-
-        <div class="mt-4 pt-4 border-t border-gray-100 flex justify-center">
-            <a href="{{ route('login.admin') }}" class="text-xs text-gray-500 hover:text-gray-700">
-                {{ __('Login as Admin (Auto-create)') }}
-            </a>
-        </div>
     </form>
 </x-guest-layout>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Rating;
+use Illuminate\Support\Facades\Gate;
 
 class RatingController extends Controller
 {
@@ -27,7 +28,7 @@ class RatingController extends Controller
 
     public function destroy(Rating $rating)
     {
-        $this->authorize('delete', $rating);
+        Gate::authorize('delete', $rating);
         $rating->delete();
 
         return redirect()->route('dashboard')->with('success', 'Rating deleted.');

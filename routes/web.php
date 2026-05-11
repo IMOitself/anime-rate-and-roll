@@ -12,14 +12,14 @@ Route::get('/', function () {
     return redirect()->route('dashboard');
 });
 
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/roll', [RollController::class, 'index'])->name('roll');
+Route::get('/animes', [AnimeController::class, 'index'])->name('animes.index');
+Route::get('/animes/{anime}', [AnimeController::class, 'show'])->name('animes.show');
+
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/roll', [RollController::class, 'index'])->name('roll');
     Route::post('/ratings', [RatingController::class, 'store'])->name('ratings.store');
     Route::delete('/ratings/{rating}', [RatingController::class, 'destroy'])->name('ratings.destroy');
-
-    Route::get('/animes', [AnimeController::class, 'index'])->name('animes.index');
-    Route::get('/animes/{anime}', [AnimeController::class, 'show'])->name('animes.show');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

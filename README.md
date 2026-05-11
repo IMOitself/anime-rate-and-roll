@@ -1,51 +1,63 @@
-# Anime Rate & Roll 🎌
+# Anime Rate & Roll :D
+simplest way to roll and rate random animes from MAL
 
-A specialized Laravel application that allows users to discover random animes through a "Roll" mechanic and share their personal ratings and reviews. Built for the WAD 2 Final Project.
+<br><br>
+> [!NOTE]
+>  i use [api.jikan.moe](https://jikan.moe/) in getting anime data :)
 
-## 🚀 Features
+### Features
+- **Random Anime Rolling**: discover new titles through a "Roll" mechanic!
+- **5-Star Rating System**: simple star-based voting for your favorites :D
+- **User Reviews**: share your thoughts on every anime you rate.
+- **Top Rated Grid**: see what the community loves, sorted by top ratings.
+- **Guest Access**: anyone can browse and roll even without logging in!
+- **Admin Access**: special features for the commander.
 
-- **Random Anime Rolling**: Discover new titles via the Jikan API (MyAnimeList).
-- **5-Star Rating System**: Intuitive star-based voting for your favorite (or least favorite) titles.
-- **User Reviews**: Share detailed thoughts on every anime you rate.
-- **Top Rated Collection**: A curated grid of animes sorted by community average score.
-- **Guest Browsing**: Anyone can browse the top-rated animes and roll for discovery.
-- **Admin Dashboard**: Specialized management features for system administrators.
-- **Responsive Design**: Clean and modern UI built with Tailwind CSS.
+<details><summary><h3>database tables & eloquent relationships </summary>
 
-## 🛠️ Implemented Concepts (WAD 2 Requirements)
+#### Tables
+- `users`: stores user credentials and roles.
+- `animes`: stores cached anime data from the Jikan API.
+- `ratings`: stores scores and comments.
 
-1. **CRUD Operations**: Full management of Anime ratings and reviews.
-2. **Authentication**: Secure user registration and login system.
-3. **Middleware**: Guest/Auth access control and Admin-only route protection.
-4. **Authorization**: Policies and Gates to ensure users only manage their own ratings.
-5. **Eloquent Relationships**: Advanced mappings between Users, Animes, and Ratings.
+#### Eloquent Relationships
+- **User** `hasMany` **Rating**: users can give many ratings :)
+- **Anime** `hasMany` **Rating**: animes can have many user ratings.
+- **Rating** `belongsTo` **User**: each rating belongs to a user.
+- **Rating** `belongsTo` **Anime**: each rating is linked to an anime.
+    
+</details>
 
-## 📊 Database Schema & Relationships
+<details><summary><h3>implemented concepts (WAD 2) </summary>
 
-### Tables
-- `users`: Stores user credentials and roles.
-- `animes`: Stores cached anime data from the Jikan API.
-- `ratings`: Link table storing scores and comments.
+1. **CRUD Operations**: full management of anime ratings and reviews.
+2. **Authentication**: secure registration and login system.
+3. **Middleware**: guest/auth access control and admin-only routes.
+4. **Authorization**: policies and gates for proper ownership.
+5. **Eloquent Relationships**: proper mappings between models.
 
-### Eloquent Relationships
-- **User** `hasMany` **Rating**: A user can provide many ratings.
-- **Anime** `hasMany` **Rating**: An anime can have multiple user ratings.
-- **Rating** `belongsTo` **User**: Each rating is owned by a specific user.
-- **Rating** `belongsTo` **Anime**: Each rating is linked to a specific anime title.
+</details>
 
-## 🛡️ Admin Access
+<br>
 
+## Admin Access 🛡️
 **Commander Erwin Smith**
 - **Email/Username**: `commander-erwin`
 - **Password**: `shinzousasageyo`
 
-## 📦 Installation
+<br>
 
-1. Clone the repository
-2. Run `composer install` and `npm install`
-3. Configure your `.env` file (Database and App settings)
-4. Run `php artisan migrate --seed`
-5. Start the server: `php artisan serve`
+## Installation
+- must have php and composer
+- configure your `.env` file (Database and App settings)
 
----
-*Built with Laravel 11 and ❤️ by Pair*
+```bash
+composer install
+npm install
+```
+```bash
+php artisan migrate --seed
+```
+```bash
+php artisan serve
+```

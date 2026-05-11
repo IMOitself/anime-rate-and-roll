@@ -1,70 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anime Details</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-</head>
-<body>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Anime Details</h3>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-bordered">
-                            <tr>
-                                <th width="200">Anime ID</th>
-                                <td>{{ $anime->mal_id }}</td>
-                            </tr>
-                            <tr>
-                                <th>Image</th>
-                                <td>{{ $anime->image_url }}</td>
-                            </tr>
-                            <tr>
-                                <th>Title</th>
-                                <td>{{ $anime->title }}</td>
-                            </tr>
-                            <tr>
-                                <th>Score</th>
-                                <td>{{ $anime->score }}</td>
-                            </tr>
-                            <tr>
-                                <th>Episodes</th>
-                                <td>{{ $anime->episodes }}</td>
-                            </tr>
-                            <tr>
-                                <th>Created At</th>
-                                <td>{{ $anime->created_at->format('M d, Y h:i A') }}</td>
-                            </tr>
-                            <tr>
-                                <th>Updated At</th>
-                                <td>{{ $anime->updated_at->format('M d, Y h:i A') }}</td>
-                            </tr>
-                        </table>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ $anime->title }}
+        </h2>
+    </x-slot>
 
-                        <div class="d-flex justify-content-between mt-3">
-                            <a href="{{ route('animes.index') }}" class="btn btn-secondary">Back to List</a>
-                            <div>
-                                <a href="{{ route('animes.edit', $anime->id) }}" class="btn btn-warning">Edit</a>
-                                <form action="{{ route('animes.destroy', $anime->id) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this anime?')">Delete</button>
-                                </form>
-                            </div>
-                        </div>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
+                <div class="p-6 text-gray-900 flex gap-6">
+                    <img src="{{ $anime->image_url }}" class="h-64 rounded-lg shadow-md">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2">{{ $anime->title }}</h3>
+                        <p class="text-gray-600 mb-1">⭐ {{ $anime->score }} | {{ $anime->episodes }} episodes</p>
+                        <p class="text-gray-600">{{ $anime->ratings->count() }} user ratings</p>
                     </div>
+                </div>
+            </div>
+
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <h3 class="text-lg font-semibold mb-4">Ratings</h3>
+                    @forelse($anime->ratings as $rating)
+                        <div class="border-b py-3 last:border-0">
+                            <div class="flex justify-between">
+                                <span class="font-medium">{{ $rating->user->name }}</span>
+                                <span class="text-yellow-600 font-bold">{{ $rating->score }}/10</span>
+                            </div>
+                            @if($rating->comment)
+                                <p class="text-gray-600 text-sm mt-1">{{ $rating->comment }}</p>
+                            @endif
+                        </div>
+                    @empty
+                        <p class="text-gray-500">No ratings yet.</p>
+                    @endforelse
                 </div>
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</x-app-layout>

@@ -1,72 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anime Watched MS</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-</head>
-<body>
-    <div class="container mt-5">
-        <div class="row mb-4">
-            <div class="col">
-                <h2>Anime Watched Management System</h2>
-            </div>
-            <div class="col text-end">
-                <a href="{{ route('animes.create') }}" class="btn btn-primary">Add New Anime</a>
-            </div>
-        </div>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('All Animes') }}
+        </h2>
+    </x-slot>
 
-        @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        @endif
-
-        <div class="card">
-            <div class="card-body">
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>Anime ID</th>
-                            <th>Image</th>
-                            <th>Title</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @forelse($animes as $anime)
-                            <tr>
-                                <td>{{ $anime->mal_id }}</td>
-                                <td><img src="{{ $anime->image_url }}" style="height: 75px;"></td>
-                                <td>{{ $anime->title }}</td>
-                                <td>
-                                    <a href="{{ route('animes.show', $anime->id) }}" class="btn btn-sm btn-info">View</a>
-                                    <a href="{{ route('animes.edit', $anime->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                                    <form action="{{ route('animes.destroy', $anime->id) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
+                            <div class="border rounded-lg p-4">
+                                <img src="{{ $anime->image_url }}" class="h-40 w-full object-cover rounded mb-2">
+                                <a href="{{ route('animes.show', $anime) }}" class="font-semibold text-indigo-600 hover:underline">{{ $anime->title }}</a>
+                                <p class="text-sm text-gray-600">{{ $anime->ratings_count }} ratings</p>
+                            </div>
                         @empty
-                            <tr>
-                                <td colspan="5" class="text-center">No animes found.</td>
-                            </tr>
+                            <p>No animes found.</p>
                         @endforelse
-                    </tbody>
-                </table>
-                
-                <div class="d-flex justify-content-center mt-3">
-                    {{ $animes->links('pagination::bootstrap-5') }}
+                    </div>
+
+                    <div class="mt-6">
+                        {{ $animes->links() }}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</x-app-layout>

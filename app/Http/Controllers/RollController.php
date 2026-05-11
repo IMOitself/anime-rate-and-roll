@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\Http;
+use App\Models\Anime;
+
+class RollController extends Controller
+{
+    public function index()
+    {
+        $randomPage = rand(1, 5);
+        $response = Http::withoutVerifying()
+            ->get("https://api.jikan.moe/v4/top/anime?filter=bypopularity&page={$randomPage}&sfw=true");
+
+        $data = $response->json('data');
+
+        if (empty($data)) {
+            return redirect()->route('roll')->with('error', 'Roll failed. Try again.');
+        }
+
+        $apiAnime = collect($data)->random();
+
+        $anime = Anime::firstOrCreate(
+            ['mal_id' => $apiAnime['mal_id']],
+            [
+                'image_url' => $apiAnime['images']['jpg']['large_image_url'] ?? '',
+                'title' => $apiAnime['title_english'] ?? $apiAnime['title'] ?? 'Unknown',
+                'score' => $apiAnime['score'] ?? 0,
+                'episodes' => $apiAnime['episodes'] ?? 0,
+            ]
+        );
+
+        return view('roll.index', compact('anime'));
+    }
+}

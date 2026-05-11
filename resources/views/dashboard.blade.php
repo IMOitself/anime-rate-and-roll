@@ -9,7 +9,33 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
+                    <h3 class="text-lg font-semibold mb-4">Your Ratings</h3>
+
+                    @if($ratings->isEmpty())
+                        <p>No ratings yet. <a href="{{ route('roll') }}" class="text-indigo-600 underline">Roll an anime</a> to start.</p>
+                    @else
+                        <div class="space-y-4">
+                            @foreach($ratings as $rating)
+                                <div class="border rounded-lg p-4 flex justify-between items-center">
+                                    <div class="flex items-center gap-4">
+                                        <img src="{{ $rating->anime->image_url }}" class="h-20 rounded">
+                                        <div>
+                                            <a href="{{ route('animes.show', $rating->anime) }}" class="font-semibold text-indigo-600 hover:underline">{{ $rating->anime->title }}</a>
+                                            <p class="text-sm text-gray-600">Score: {{ $rating->score }}/10</p>
+                                            @if($rating->comment)
+                                                <p class="text-sm text-gray-500">{{ $rating->comment }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <form action="{{ route('ratings.destroy', $rating) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-600 hover:text-red-800 text-sm" onclick="return confirm('Delete this rating?')">Delete</button>
+                                    </form>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

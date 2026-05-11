@@ -32,6 +32,7 @@ class RollController extends Controller
         );
 
         $anime->loadAvg('ratings', 'score');
+        $anime->loadCount('ratings');
 
         return view('roll.index', compact('anime'));
     }

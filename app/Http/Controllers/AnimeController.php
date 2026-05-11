@@ -8,9 +8,13 @@ class AnimeController extends Controller
 {
     public function index()
     {
-        $animes = Anime::withCount('ratings')
+        $animes = Anime::has('ratings')
+            ->withCount('ratings')
             ->withAvg('ratings', 'score')
+            ->orderByDesc('ratings_avg_score')
+            ->orderByDesc('ratings_count')
             ->paginate(12);
+            
         return view('animes.index', compact('animes'));
     }
 

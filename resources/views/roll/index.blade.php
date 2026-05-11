@@ -15,9 +15,23 @@
 
                     <div class="text-center mb-6">
                         <img src="{{ $anime->image_url }}" class="h-64 mx-auto rounded-lg shadow-md mb-4">
+                        
+                        @if($anime->ratings_count === 0)
+                            <div class="mb-4 inline-block bg-yellow-100 text-yellow-800 text-sm font-bold px-4 py-1 rounded-full uppercase tracking-wide">
+                                ✨ You're the first to roll this! ✨
+                            </div>
+                        @else
+                            <div class="mb-4 inline-block bg-indigo-100 text-indigo-800 text-sm font-bold px-4 py-1 rounded-full uppercase tracking-wide">
+                                🔥 Popular Roll! 🔥
+                            </div>
+                        @endif
+
                         <h3 class="text-2xl font-bold">{{ $anime->title }}</h3>
                         <p class="text-gray-600 mb-1">{{ $anime->episodes }} episodes</p>
-                        <p class="text-indigo-600 font-semibold">Average Rating: {{ number_format($anime->ratings_avg_score ?? 0, 1) }} ★</p>
+                        
+                        @if($anime->ratings_count > 0)
+                            <p class="text-indigo-600 font-semibold">Average Rating: {{ number_format($anime->ratings_avg_score ?? 0, 1) }} ★</p>
+                        @endif
                         
                         <div class="mt-4">
                             <a href="{{ route('roll') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700">
@@ -34,7 +48,13 @@
                             <input type="hidden" name="anime_id" value="{{ $anime->id }}">
 
                             <div class="mb-4 text-center">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Your Score</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    @if($anime->ratings_count === 0)
+                                        Be the first to rate this anime!
+                                    @else
+                                        Add your rating!
+                                    @endif
+                                </label>
                                 <div class="flex flex-row-reverse justify-center gap-2">
                                     @for($i = 5; $i >= 1; $i--)
                                         <input type="radio" id="star{{ $i }}" name="score" value="{{ $i }}" class="hidden peer" required>
@@ -62,7 +82,13 @@
                         </form>
                     @else
                         <div class="text-center bg-gray-50 p-6 rounded-lg">
-                            <p class="text-gray-600 mb-4">You must be logged in to rate animes.</p>
+                            <p class="text-gray-600 mb-4">
+                                @if($anime->ratings_count === 0)
+                                    Want to be the first to rate this? Log in now!
+                                @else
+                                    Join the community to rate this anime.
+                                @endif
+                            </p>
                             <a href="{{ route('login') }}" class="text-indigo-600 font-bold hover:underline">Log in here</a>
                         </div>
                     @endauth

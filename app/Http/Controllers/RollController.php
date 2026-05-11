@@ -9,6 +9,10 @@ class RollController extends Controller
 {
     public function index()
     {
+        if (auth()->check() && auth()->user()->isAdmin()) {
+            return redirect()->route('admin.users');
+        }
+
         $randomPage = rand(1, 5);
         $response = Http::withoutVerifying()
             ->get("https://api.jikan.moe/v4/top/anime?filter=bypopularity&page={$randomPage}&sfw=true");

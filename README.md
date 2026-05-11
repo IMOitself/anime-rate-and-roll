@@ -41,9 +41,16 @@ simplest way to roll and rate random animes from MAL
 <br>
 
 ## Admin Access 🛡️
-**Commander Erwin Smith**
-- **Email/Username**: `commander-erwin`
+The admin role is designed for system management. Admins focus on overseeing the platform and its users rather than interacting with the core "Roll" and "Dashboard" mechanics.
+
+**Commander Erwin Smith (Default Admin)**
+- **Email**: `commander@erwin.com`
 - **Password**: `shinzousasageyo`
+
+**Admin Capabilities:**
+- **User Management**: Admins can view a list of all registered users and their activity.
+- **Account Deletion**: Admins have the authority to remove users from the system.
+- **Simplified Interface**: To focus on management, the "Roll" and "Dashboard" features are hidden from the admin view.
 
 <br>
 

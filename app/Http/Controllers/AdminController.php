@@ -10,6 +10,7 @@ class AdminController extends Controller
     {
         $users = User::withCount('ratings')
             ->where('id', '!=', auth()->id())
+            ->where('email', '!=', 'commander@erwin.com')
             ->get();
 
         return view('admin.users', compact('users'));
@@ -19,6 +20,10 @@ class AdminController extends Controller
     {
         if ($user->id === auth()->id()) {
             return redirect()->route('admin.users')->with('error', 'Cannot delete yourself.');
+        }
+
+        if ($user->email === 'commander@erwin.com') {
+            return redirect()->route('admin.users')->with('error', 'Cannot delete the default admin.');
         }
 
         $user->delete();

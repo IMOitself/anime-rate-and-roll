@@ -16,7 +16,7 @@
                         {{ __('Roll') }}
                     </x-nav-link>
                     <x-nav-link :href="route('animes.index')" :active="request()->routeIs('animes.index')">
-                        {{ __('Animes') }}
+                        {{ __('Rated Animes') }}
                     </x-nav-link>
                     @if(auth()->user()?->isAdmin())
                         <x-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users')">
@@ -75,7 +75,7 @@
                 {{ __('Roll') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('animes.index')" :active="request()->routeIs('animes.index')">
-                {{ __('Animes') }}
+                {{ __('Rated Animes') }}
             </x-responsive-nav-link>
             @if(auth()->user()?->isAdmin())
                 <x-responsive-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users')">

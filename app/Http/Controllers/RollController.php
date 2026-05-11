@@ -26,7 +26,7 @@ class RollController extends Controller
             [
                 'image_url' => $apiAnime['images']['jpg']['large_image_url'] ?? '',
                 'title' => $apiAnime['title_english'] ?? $apiAnime['title'] ?? 'Unknown',
-                'score' => $apiAnime['score'] ?? 0,
+                'score' => 0,
                 'episodes' => $apiAnime['episodes'] ?? 0,
             ]
         );

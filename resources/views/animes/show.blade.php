@@ -12,7 +12,7 @@
                     <img src="{{ $anime->image_url }}" class="h-64 rounded-lg shadow-md">
                     <div>
                         <h3 class="text-2xl font-bold mb-2">{{ $anime->title }}</h3>
-                        <p class="text-gray-600 mb-1">⭐ {{ $anime->score }} | {{ $anime->episodes }} episodes</p>
+                        <p class="text-gray-600 mb-1">{{ $anime->episodes }} episodes</p>
                         <p class="text-gray-600">{{ $anime->ratings->count() }} user ratings</p>
                     </div>
                 </div>
